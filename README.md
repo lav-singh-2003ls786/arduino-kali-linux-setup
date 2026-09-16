@@ -170,6 +170,13 @@ LED OFF
   ↓
 Repeat
 
+## Demonstration Video
+The following video demonstrates the ESP32 Blink example running successfully on the ESP32 Dev Module.
+
+[Watch the ESP32 Blink Demonstration](docs/videos/esp32-blink-demo.mp4)
+
+The video shows the onboard LED blinking continuously with approximately one second between the ON and OFF states.
+
 ESP32 Upload Troubleshooting
 ESP32 is not shown under Port
 
