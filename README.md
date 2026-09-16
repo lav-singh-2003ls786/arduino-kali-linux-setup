@@ -1,147 +1,216 @@
-# Arduino Development on Kali Linux
+# Arduino Development on Kali Linux with ESP32
 
-A beginner-friendly Arduino project demonstrating how to set up Arduino development on Kali Linux and upload a basic Blink program to an Arduino board.
+A beginner-friendly ESP32 project demonstrating Arduino development on Kali Linux, including setup, compilation, uploading, and a basic Blink example.
 
 ## Project Overview
 
-This repository provides a simple starting point for Arduino development in a Kali Linux environment.
+This repository provides a simple starting point for developing ESP32 applications using the Arduino IDE on Kali Linux.
 
-The included example uses the Arduino built-in LED to demonstrate:
+The included Blink example was tested successfully with:
 
-- Arduino IDE setup
-- Arduino programming
-- Basic GPIO control
-- Compiling and uploading an Arduino program
-- Git and GitHub project management
+- Kali Linux
+- Arduino IDE 1.8.19
+- ESP32 Dev Module
+- `/dev/ttyUSB0`
+- GPIO 2 for the onboard LED
 
-## Project Structure
+## Features
 
-```text
+- Arduino IDE setup on Kali Linux
+- ESP32 board configuration
+- USB serial port configuration
+- Basic ESP32 GPIO programming
+- Blink LED example
+- Git and GitHub workflow
+- Beginner-friendly setup instructions
 
-arduino-kali-linux-setup/
-├── README.md
-├── examples/
-│   └── blink/
-│       └── blink.ino
-├── docs/
-└── requirements/
-    └── libraries.txt
+## Hardware Requirements
 
-Hardware Requirements
-Arduino-compatible development board
-USB cable compatible with the Arduino board
-Computer running Kali Linux
+- ESP32 development board
+- USB data cable
+- Computer running Kali Linux
 
-The Blink program uses LED_BUILTIN, so the exact LED pin does not need to be specified in the program.
+> The Blink example uses GPIO 2, which is commonly connected to the onboard LED on ESP32 development boards. If your particular ESP32 board uses a different onboard LED pin, change `LED_PIN` accordingly.
 
-Software Requirements
-Kali Linux
-Arduino IDE
-Git
-USB access to the Arduino board
+## Software Requirements
 
-Arduino IDE
-This project was tested with:
+- Kali Linux
+- Arduino IDE 1.8.19 or compatible Arduino IDE
+- ESP32 board support package for Arduino IDE
+- Git
+- USB access to the ESP32
 
-Arduino IDE 1.8.19
+## Arduino IDE Setup
 
-Check your Arduino IDE installation with:
+Start Arduino IDE from the Kali Linux terminal:
+
+```bash
+arduino
+
+Check the Arduino IDE version:
 arduino --version
 
-Expected output:
+Example:
+
 Arduino: 1.8.19
 
-Git
-Check Git with:
+ESP32 Board Configuration
+In Arduino IDE, select:
 
-git --version
+Tools → Board → ESP32 Arduino → ESP32 Dev Module
 
-Example:
-git version 2.53.0
+The ESP32 board package must be installed before the ESP32 Dev Module appears in the Board menu.
+
+Serial Port Configuration
+Connect the ESP32 to the computer using a USB data cable.
+
+Then select:
+Tools → Port → /dev/ttyUSB0
+
+The port can be different on another Linux system.
+
+To find the detected serial device from the terminal:
+ls /dev/ttyUSB* /dev/ttyACM* 2>/dev/null
+
+You can also check USB devices with:
+lsusb
 
 Download the Repository
-Clone the repository using:
+Clone the repository:
 
-git clone https://github.com/YOUR-USERNAME/arduino-kali-linux-setup.git
+git clone https://github.com/lav-singh-2003ls786/arduino-kali-linux-setup.git
 
 Enter the project directory:
 cd arduino-kali-linux-setup
 
-Arduino Blink Example
+Project Structure
+arduino-kali-linux-setup/
+├── README.md
+├── .gitignore
+├── examples/
+│   └── blink/
+│       └── blink.ino
+├── requirements/
+│   └── libraries.txt
+└── docs/
+
+Blink Example
 The Blink example is located at:
 
 examples/blink/blink.ino
 
-The program turns the built-in LED ON for one second and OFF for one second repeatedly.
+The program uses GPIO 2 to turn the LED ON and OFF every second.
 
-Program
+Source Code
+#define LED_PIN 2
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 }
-
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_PIN, HIGH);
   delay(1000);
-
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_PIN, LOW);
   delay(1000);
 }
+
+How the Program Works
+The program has two main functions.
+
+setup()
+pinMode(LED_PIN, OUTPUT);
+
+This configures GPIO 2 as an output pin.
+
+loop()
+digitalWrite(LED_PIN, HIGH);
+delay(1000);
+
+The LED is turned ON for one second.
+
+Then:
+digitalWrite(LED_PIN, LOW);
+delay(1000);
+
+The LED is turned OFF for one second.
+The loop() function repeats continuously.
 
 How to Upload the Program
+Connect the ESP32 to the computer using USB.
+Start Arduino IDE:
 
-Method 1: Using Arduino IDE
-Connect the Arduino board to the computer using USB.
-Open Arduino IDE.
+arduino
 
 Open:
 examples/blink/blink.ino
 
-Select the correct board:
-Tools → Board
+Select:
+Tools → Board → ESP32 Arduino → ESP32 Dev Module
 
-Select the correct serial port:
-Tools → Port
+Select the appropriate serial port:
+Tools → Port → /dev/ttyUSB0
 
 Click Verify to compile the program.
 Click Upload.
-Wait for the upload to complete.
 
-After successful uploading, the built-in LED should blink continuously.
+Wait until Arduino IDE displays:
+Done uploading.
 
-Running Arduino IDE on Kali Linux
-Arduino IDE can be started from the terminal with:
+The ESP32 should then restart and run the program.
 
-arduino
+Expected Result
+The onboard LED should repeatedly follow this pattern:
 
-If the Arduino IDE opens successfully, you can use the graphical interface to select the board, port, compile the program, and upload it.
+LED ON
+  ↓
+1 second
+  ↓
+LED OFF
+  ↓
+1 second
+  ↓
+Repeat
 
-Serial Port Troubleshooting
-If the Arduino does not appear under:
+ESP32 Upload Troubleshooting
+ESP32 is not shown under Port
 
-Tools → Port
+Check the available serial devices:
+ls /dev/ttyUSB* /dev/ttyACM* 2>/dev/null
 
-first check the available serial devices:
-ls /dev/ttyUSB*
-
-and:
-ls /dev/ttyACM*
-
-You can also check connected USB devices with:
+Also check:
 lsusb
 
-Disconnect the Arduino, run the command, reconnect the Arduino, and run it again to identify the newly detected device.
+Try disconnecting and reconnecting the ESP32 USB cable.
+Make sure the USB cable supports data transfer. Some USB cables provide power only.
 
-Linux Permission Troubleshooting
-If you receive a permission error while accessing the serial port, check the current user groups:
+Permission denied for /dev/ttyUSB0
 
+Check your groups:
 groups
 
-On many Linux systems, the Arduino serial device is accessible through the dialout group.
-
-You can add your current user to the group with:
+If required, add your user to the dialout group:
 sudo usermod -aG dialout $USER
 
-Then log out and log back in for the group membership to take effect.
+Log out and log back in afterward.
+
+ESP32 cannot connect while uploading
+If Arduino IDE remains at:
+
+Connecting........
+
+some ESP32 development boards require the BOOT button to be held briefly while the upload begins.
+The exact procedure can vary by ESP32 board.
+
+LED does not blink
+This example uses:
+
+#define LED_PIN 2
+
+GPIO 2 is common on many ESP32 development boards, but the onboard LED pin is not identical on every ESP32 board.
+
+If your board has an onboard LED connected to another GPIO, change:
+#define LED_PIN 2
+
+to the appropriate GPIO number for your board.
 
 Required Libraries
 The Blink example does not require any external Arduino library.
@@ -149,49 +218,52 @@ The Blink example does not require any external Arduino library.
 The dependency information is available in:
 requirements/libraries.txt
 
-Expected Result
-After uploading the program:
+The ESP32 Arduino board support package is required for compiling ESP32 sketches.
 
-LED ON
-   ↓
-1 second
-   ↓
-LED OFF
-   ↓
-1 second
-   ↓
-Repeat
+GitHub Workflow
+After cloning the repository, users can update their local copy with:
 
-The Arduino's built-in LED should continuously blink at one-second intervals.
+git pull
+
+To create their own changes:
+
+git add .
+git commit -m "Describe your changes"
+git push
+
+Users need appropriate GitHub permissions to push directly to this repository. Other users can also fork the repository and work on their own copy.
 
 Learning Objectives
 After completing this project, a beginner should understand:
 
-How to install and launch Arduino IDE on Kali Linux.
-How to connect an Arduino board through USB.
-How to select an Arduino board and serial port.
-How to write a basic Arduino program.
-How to compile and upload an Arduino sketch.
-How to organize an Arduino project.
+How to run Arduino IDE on Kali Linux.
+How to install and configure ESP32 board support.
+How to select an ESP32 board.
+How to identify a Linux serial port.
+How to write a basic ESP32 program.
+How to compile an Arduino sketch.
+How to upload a sketch to an ESP32.
 How to use Git for version control.
-How to publish an Arduino project on GitHub.
+How to clone a public GitHub repository.
+How to organize and document an Arduino project.
 
 Future Improvements
 Possible additions to this repository include:
 
 Button input example
-LED control using a button
+External LED control
 Serial communication
 Analog sensor reading
 DHT11 temperature and humidity sensor
 Ultrasonic distance sensor
 MQ-series gas sensors
 Buzzer control
-ESP32 examples
-Sensor integration projects
+ESP32 Wi-Fi example
+ESP32 Bluetooth example
+Multiple sensor integration
 
 Author
-Created as a learning project for Arduino development and GitHub-based project sharing.
+Created as a learning project for Arduino/ESP32 development on Kali Linux and GitHub-based project sharing.
 
 License
-This project is intended for educational and learning purposes.
+This project is provided for educational and learning purposes.
