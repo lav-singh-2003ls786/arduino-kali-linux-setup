@@ -1,0 +1,27 @@
+# Arduino IDE temporary files
+*.hex
+*.elf
+*.eep
+*.bin
+*.map
+
+# Arduino build/cache directories
+build/
+out/
+
+# Linux temporary/system files
+*~
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Arduino IDE
+.idea/
